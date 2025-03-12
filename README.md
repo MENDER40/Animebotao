@@ -103,7 +103,7 @@ local Tabs = {
 
 Tabs.Info:AddParagraph({
     Title = "This script is updated daily",
-    Content = "Correções de bugs"
+    Content = "Add Auto farm all worlds \nAdd Ant afk"
 })
 
 -- Função para executar o ataque
@@ -116,9 +116,12 @@ end
 local World_NPCs = {
     ["World 1"] = { "Dragon_1", "Dragon_2", "Dragon_3", "Dragon_4", "Dragon_5" },
     ["World 2"] = { "Leaf_1", "Leaf_2", "Leaf_3", "Leaf_4", "Leaf_5" },
-    ["World 7"] = { "Piece_1", "Piece_2", "Piece_3", "Piece_4", "Piece_5" },
-    ["World 8"] = { "Assassin_1", "Assassin_2", "Assassin_3", "Assassin_4", "Assassin_5" }, 
-    ["World 9"] = { "Empty_1", "Empty_2", "Empty_3", "Empty_4", "Empty_5" }
+    ["World 3"] = { "Snowy_1", "Snowy_2", "Snowy_3", "Snowy_4", "Snowy_5" },
+    ["World 4"] = { "Punch_1", "Punch_2", "Punch_3", "Punch_4", "Punch_5" },
+    ["World 5"] = { "Solo_1", "Solo_2", "Solo_3", "Solo_4", "Solo_5" },
+    ["World 6"] = { "Piece_1", "Piece_2", "Piece_3", "Piece_4", "Piece_5" },
+    ["World 7"] = { "Assassin_1", "Assassin_2", "Assassin_3", "Assassin_4", "Assassin_5" }, 
+    ["World 8"] = { "Empty_1", "Empty_2", "Empty_3", "Empty_4", "Empty_5" }
 }
 
 local Selected_World = "World 1" -- Ilha inicial padrão
@@ -127,7 +130,7 @@ local Selected_NPC = World_NPCs[Selected_World][1] -- Primeiro NPC da ilha inici
 -- Criando Dropdown para escolher a Ilha
 local WorldDropdown = Tabs.Farm:AddDropdown("Selecionar Ilha", {
     Title = "Escolha uma Ilha",
-    Values = { "World 1", "World 2", "World 7", "World 8", "World 9" },
+    Values = { "World 1", "World 2", "World 3", "World 4", "World 5", "World 6", "World 7", "World 8" },
     Default = 1
 })
 
@@ -246,4 +249,3 @@ Toggle:OnChanged(function(state)
         end)
     end
 end)
-
