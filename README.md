@@ -117,7 +117,8 @@ local World_NPCs = {
     ["World 1"] = { "Dragon_1", "Dragon_2", "Dragon_3", "Dragon_4", "Dragon_5" },
     ["World 2"] = { "Leaf_1", "Leaf_2", "Leaf_3", "Leaf_4", "Leaf_5" },
     ["World 7"] = { "Piece_1", "Piece_2", "Piece_3", "Piece_4", "Piece_5" },
-    ["World 8"] = { "Assassin_1", "Assassin_2", "Assassin_3", "Assassin_4", "Assassin_5" }
+    ["World 8"] = { "Assassin_1", "Assassin_2", "Assassin_3", "Assassin_4", "Assassin_5" }, 
+    ["World 9"] = { "Empty_1", "Empty_2", "Empty_3", "Empty_4", "Empty_5" }
 }
 
 local Selected_World = "World 1" -- Ilha inicial padrão
@@ -126,7 +127,7 @@ local Selected_NPC = World_NPCs[Selected_World][1] -- Primeiro NPC da ilha inici
 -- Criando Dropdown para escolher a Ilha
 local WorldDropdown = Tabs.Farm:AddDropdown("Selecionar Ilha", {
     Title = "Escolha uma Ilha",
-    Values = { "World 1", "World 2", "World 7", "World 8" },
+    Values = { "World 1", "World 2", "World 7", "World 8", "World 9" },
     Default = 1
 })
 
@@ -166,6 +167,38 @@ Tabs.Farm:AddButton({ Title = "Atacar NPC Selecionado", Callback = function() At
 
 
 --AUTO HATH
+
+local AutoHatch = Tabs.Eggs:AddToggle("AutoHatch", {Title = "SoloWorld", Default = false})
+AutoHatch:OnChanged(function()
+    while AutoHatch.Value do
+        --remote
+        local args = {
+    [1] = "DungeonWorld",
+    [2] = "Multi"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Assets"):WaitForChild("Remotes"):WaitForChild("openEssence"):InvokeServer(unpack(args))
+        task.wait(0.5)
+    end
+end)
+
+
+local AutoHatch = Tabs.Eggs:AddToggle("AutoHatch", {Title = "Piece Docks", Default = false})
+AutoHatch:OnChanged(function()
+    while AutoHatch.Value do
+        --remote
+        local args = {
+    [1] = "PieceWorld",
+    [2] = "Multi"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Assets"):WaitForChild("Remotes"):WaitForChild("openEssence"):InvokeServer(unpack(args))
+
+        task.wait(0.5)
+    end
+end)
+
+
 local AutoHatch = Tabs.Eggs:AddToggle("AutoHatch", {Title = "Assasin park", Default = false})
 AutoHatch:OnChanged(function()
     while AutoHatch.Value do
@@ -194,3 +227,23 @@ game:GetService("ReplicatedStorage"):WaitForChild("Assets"):WaitForChild("Remote
         task.wait(0.5)
     end
 end)
+
+    
+local Toggle = Tabs.Settings:AddToggle("AntiAFK", { Title = "Anti AFK", Default = true})
+
+Toggle:OnChanged(function(state)
+    _G.antiAFK = state
+
+    if _G.antiAFK then
+        task.spawn(function()
+            while _G.antiAFK do
+                game:GetService("Players").LocalPlayer.Idled:Connect(function()
+                    game:GetService("VirtualUser"):CaptureController()
+                    game:GetService("VirtualUser"):ClickButton2(Vector2.new())
+                end)
+                task.wait(1)
+            end
+        end)
+    end
+end)
+
